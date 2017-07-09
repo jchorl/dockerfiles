@@ -7,12 +7,12 @@
 #     --name spotify \
 #     jchorl/spotify
 
-FROM debian:latest
+FROM debian:jessie
 LABEL maintainer "Josh Chorlton <josh@joshchorlton.com>"
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 && \
-        echo deb http://repository.spotify.com stable non-free > /etc/apt/sources.list.d/spotify.list && \
-        apt-get update && apt-get install -y spotify-client pulseaudio
+    echo deb http://repository.spotify.com stable non-free > /etc/apt/sources.list.d/spotify.list && \
+    apt-get update && apt-get install -y spotify-client pulseaudio dbus-x11
 
 ENV uid 1000
 ENV gid 1000
