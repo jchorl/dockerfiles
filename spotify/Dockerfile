@@ -4,6 +4,7 @@
 #     -v /run/user/1000/pulse:/run/user/1000/pulse:ro \
 #     -e DISPLAY=$DISPLAY \
 #     -v /tmp/.X11-unix:/tmp/.X11-unix \
+#     -l spotify \
 #     --name spotify \
 #     jchorl/spotify
 
