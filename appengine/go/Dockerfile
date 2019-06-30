@@ -6,9 +6,9 @@ RUN apt-get update && \
     python-pip
 RUN pip install grpc
 
-RUN wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-247.0.0-linux-x86_64.tar.gz && \
-    tar -xf google-cloud-sdk-247.0.0-linux-x86_64.tar.gz -C / && \
-    rm -rf google-cloud-sdk-219.0.0-linux-x86_64.tar.gz
+RUN wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-252.0.0-linux-x86_64.tar.gz && \
+    tar -xf google-cloud-sdk-252.0.0-linux-x86_64.tar.gz -C / && \
+    rm -rf google-cloud-sdk-252.0.0-linux-x86_64.tar.gz
 
 ENV PATH="/google-cloud-sdk/bin:${PATH}"
 
