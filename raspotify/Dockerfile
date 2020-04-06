@@ -1,5 +1,7 @@
 FROM ubuntu:19.10
 
+# mostly based off https://github.com/dtcooper/raspotify/blob/822c0d80616e85a45ee4ddf26d1550a812dc4c99/raspotify/lib/systemd/system/raspotify.service
+
 # Install curl and https apt transport
 RUN apt-get update
 RUN apt-get -y install \
