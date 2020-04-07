@@ -1,11 +1,16 @@
 arch:
-- arm64
+- amd64
 dist: bionic
 language: minimal
 
 script:
-- docker build -t jchorl/spotifyd:$TRAVIS_COMMIT-arm32v7 -f spotifyd/Dockerfile.arm32v7
-  spotifyd
+- docker build -t jchorl/transmission:$TRAVIS_COMMIT transmission
+
+jobs:
+  include:
+  - arch: arm64
+    script:
+    - docker build -t jchorl/spotifyd:$TRAVIS_COMMIT-arm32v7 -f spotifyd/Dockerfile.arm32v7 spotifyd
 
 deploy:
 - provider: script
