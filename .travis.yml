@@ -1,0 +1,16 @@
+arch:
+- arm64
+dist: bionic
+language: minimal
+env:
+- DOCKER_USERNAME=jchorl
+script:
+- docker build -t jchorl/spotifyd:$TRAVIS_COMMIT-arm32v7 -f spotifyd/Dockerfile.arm32v7
+  spotifyd
+deploy:
+- provider: script
+  script: bash deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD
+  on:
+    branch: master
+DOCKER_PASSWORD:
+  secure: iwNUHByuudUNr2dve2vMVtOXMIlAUeRd18dVqgI0uirGHe7SIFmM32DjahlZvoaZPDjazkD6o62OcI8JKRg6SGnIbLWNUr7oIMXfLwI22LQJzBLU/JOvcepex0y061MU7Z1o07JIj5WsLackLPiC8y8jz3WEUJwbsQvmA25AT/dy2d2BPCL3aL9HVe+pQ5f/Gs5OiUnukL85M4/4Jo7Yt70SMfVB8PKvPJ7ZNZ7OhBkVT4KpI7cAF8Gir9ZQvliZb0tpeB5N1MQW8OL1t1VqdAvg22EXSNPt8kcX/nXXEv7O3cN0zC+y0hhrj0xvUfj3sqabGjPb1Gh1jpUasSTeYSTmFFiClIZxghhN2MN2v94Styhie5ENFKjkKUE4DIiLZRbHkRNsB6JYOJSvQSNkn+v4F3RiNqRlIHAmHWhBnpW/lWHFH7in0keVE6ILqt7wqiIQuA823HbyVJb7QX+HxwgbdYpz94OvabJVo/kXy1wc1dYYLhF46hRCfencyZmAFn6wJCOXhOUQH0mOeZb0qjBX2b8H3Yf5Q6I3HXWjrCFSP7hSHiM/kNBtN0TXgivihFMcEUbo3wdTT5/2RhMrjZ64Jq2CmXz/i33DaFIyBd0dkEFPyEBzKDTSqusBUD2yqqNpWlPWCbzy9zVBqDh7dXuwv0Wviz8qoZCx+USR7jU=
