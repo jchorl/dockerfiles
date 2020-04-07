@@ -1,0 +1,20 @@
+FROM arm32v7/rust:1.42
+
+# deps from https://github.com/Spotifyd/spotifyd/tree/99f058a7010e5da5425b7c572efb9f1ed8f866e8#compiling-from-source
+RUN apt-get update && apt-get install -y \
+    libasound2-dev libssl-dev libpulse-dev libdbus-1-dev \
+    git
+RUN git clone https://github.com/Spotifyd/spotifyd.git
+WORKDIR /spotifyd
+
+# latest as of April 6, 2020
+RUN git checkout 99f058a7010e5da5425b7c572efb9f1ed8f866e8
+
+RUN cargo build --release
+
+FROM arm32v7/ubuntu:19.10
+RUN apt-get update && apt-get install -y \
+    alsa
+COPY --from=0 /spotifyd/target/release/spotifyd /bin/spotifyd
+COPY spotifyd.conf /root/.config/spotifyd/spotifyd.conf
+ENTRYPOINT /bin/spotifyd
