@@ -1,3 +1,4 @@
+# docker run -it --rm --device /dev/snd -v /home/j/spotify_password.txt:/root/.config/spotifyd/password jchorl/spotifyd:0f99427f41bd0af7c907b3d61dd25c93fb78034b-arm32v7 --device-name bedroom
 FROM arm32v7/rust:1.42
 
 # deps from https://github.com/Spotifyd/spotifyd/tree/99f058a7010e5da5425b7c572efb9f1ed8f866e8#compiling-from-source
