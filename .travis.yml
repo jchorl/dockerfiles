@@ -16,7 +16,7 @@ jobs:
 
 deploy:
 - provider: script
-  script: bash deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD
+  script: bash scripts/deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD
   on:
     branch: master
 
