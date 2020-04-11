@@ -1,13 +1,21 @@
-# docker run -d --device /dev/snd -v ~/.config/spotifyd/password:/root/.config/spotifyd/password --name spotifyd jchorl/spotifyd
-FROM ubuntu:19.10
-RUN apt-get update && \
-    apt install -y wget && \
-    wget https://github.com/Spotifyd/spotifyd/releases/download/v0.2.19/spotifyd-linux-slim.tar.gz && \
-    tar -xf spotifyd-linux-slim.tar.gz
+# docker run -it --rm --device /dev/snd -v /home/j/spotify_password.txt:/root/.config/spotifyd/password jchorl/spotifyd:0f99427f41bd0af7c907b3d61dd25c93fb78034b --device-name bike
+FROM rust:1.42
+
+# deps from https://github.com/Spotifyd/spotifyd/tree/99f058a7010e5da5425b7c572efb9f1ed8f866e8#compiling-from-source
+RUN apt-get update && apt install -y \
+    libasound2-dev libssl-dev libpulse-dev libdbus-1-dev \
+    git
+RUN git clone https://github.com/Spotifyd/spotifyd.git
+WORKDIR /spotifyd
+
+# latest as of April 6, 2020
+RUN git checkout 99f058a7010e5da5425b7c572efb9f1ed8f866e8
+
+RUN cargo build --release
 
 FROM ubuntu:19.10
-RUN apt-get update && \
-    apt-get install -y alsa
-COPY --from=0 /spotifyd /bin/spotifyd
+RUN apt-get update && apt-get install -y \
+    alsa
+COPY --from=0 /spotifyd/target/release/spotifyd /bin/spotifyd
 COPY spotifyd.conf /root/.config/spotifyd/spotifyd.conf
-CMD /bin/spotifyd --no-daemon
+ENTRYPOINT ["/bin/spotifyd", "--no-daemon", "--config-path", "/root/.config/spotifyd/spotifyd.conf"]

@@ -8,6 +8,7 @@ jobs:
   include:
   - script:
     - docker build -t jchorl/transmission:$TRAVIS_COMMIT transmission
+    - docker build -t jchorl/spotifyd:$TRAVIS_COMMIT spotifyd
   - arch: arm64
     script:
     - docker build -t jchorl/spotifyd:$TRAVIS_COMMIT-arm32v7 -f spotifyd/Dockerfile.arm32v7 spotifyd
