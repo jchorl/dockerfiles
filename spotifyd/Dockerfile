@@ -1,4 +1,4 @@
-# docker run -it --rm --device /dev/snd -v /home/j/spotify_password.txt:/root/.config/spotifyd/password jchorl/spotifyd:0f99427f41bd0af7c907b3d61dd25c93fb78034b --device-name bike
+# docker run -it --device /dev/snd -v /home/j/spotify_password.txt:/root/.config/spotifyd/password:ro --restart=always jchorl/spotifyd:e7d737710f3d05e5fbc9905811d6c3531a0191ab --device-name bike
 FROM rust:1.42
 
 # deps from https://github.com/Spotifyd/spotifyd/tree/99f058a7010e5da5425b7c572efb9f1ed8f866e8#compiling-from-source
