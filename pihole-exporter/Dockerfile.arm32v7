@@ -14,6 +14,6 @@ WORKDIR /go/src/github.com/eko/pihole-exporter
 RUN GO111MODULE=on go mod vendor
 RUN CGO_ENABLED=0 GOOS=$OS GOARCH=$ARCH $GOFLAGS go build -ldflags '-s -w' -o binary ./
 
-FROM scratch
+FROM arm32v7/alpine:3.11
 COPY --from=builder /go/src/github.com/eko/pihole-exporter/binary /pihole-exporter
 ENTRYPOINT ["/pihole-exporter"]
