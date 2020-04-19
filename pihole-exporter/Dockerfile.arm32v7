@@ -1,0 +1,25 @@
+FROM arm32v7/golang:alpine as builder
+
+ARG OS=linux
+ARG ARCH=amd64
+ARG GOFLAGS
+
+RUN apk update && \
+    apk --no-cache add git alpine-sdk upx
+
+WORKDIR /go/src/github.com/eko/
+RUN git clone --depth 1 https://github.com/eko/pihole-exporter.git
+WORKDIR /go/src/github.com/eko/pihole-exporter
+
+RUN GO111MODULE=on go mod vendor
+RUN CGO_ENABLED=0 GOOS=$OS GOARCH=$ARCH $GOFLAGS go build -ldflags '-s -w' -o binary ./
+RUN upx -f --brute binary
+
+FROM scratch
+
+LABEL name="pihole-exporter"
+
+WORKDIR /root/
+COPY --from=builder /go/src/github.com/eko/pihole-exporter/binary pihole-exporter
+
+CMD ["./pihole-exporter"]
