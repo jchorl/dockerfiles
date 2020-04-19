@@ -14,11 +14,7 @@ jobs:
   - arch: arm64
     script:
     - docker build -t jchorl/spotifyd:$TRAVIS_COMMIT-arm32v7 -f spotifyd/Dockerfile.arm32v7 spotifyd
-  - arch: arm64
-    script:
-    - docker build --build-arg ARCH=$ARCH --build-arg GOFLAGS=$GOFLAGS -t jchorl/pihole-exporter:$TRAVIS_COMMIT-arm32v7 -f pihole-exporter/Dockerfile.arm32v7 pihole-exporter
-    env:
-    - ARCH=arm GOFLAGS=GOARM=7
+    - docker build -t jchorl/pihole-exporter:$TRAVIS_COMMIT-arm32v7 -f pihole-exporter/Dockerfile.arm32v7 pihole-exporter
 
 deploy:
 - provider: script
