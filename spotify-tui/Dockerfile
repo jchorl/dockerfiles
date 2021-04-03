@@ -1,12 +1,12 @@
 # auth requires this workaround: https://github.com/Rigellute/spotify-tui/issues/136#issuecomment-549771256
 # docker run -it --rm -v spotify-tui-creds:/root/.config/spotify-tui/ jchorl/spotify-tui
 
-ARG RUST_VERSION=1.46.0
+ARG RUST_VERSION=1.51
 
 FROM rust:${RUST_VERSION}
 
 ARG REPO=https://github.com/Rigellute/spotify-tui.git
-ARG COMMIT=128995ccabb067f1054c02a5f1d012fcbcf5e6de
+ARG COMMIT=c789a6a5b5a9940128b144927711a0bc9b852bc1
 
 RUN apt-get update && apt-get install -y \
     libxcb-shape0-dev \

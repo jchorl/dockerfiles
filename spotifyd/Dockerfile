@@ -1,6 +1,6 @@
 # docker run -d --device /dev/snd -v /home/j/.spotify_password:/root/.config/spotifyd/password:ro --restart=always jchorl/spotifyd:de4571067667f4340971938080c4ee725a0c4368 --device-name bike
 # on some machines, also --env ALSA_CARD=Generic (found using aplay -l https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture#Select_the_default_PCM_via_environment_variable)
-FROM rust:1.46.0
+FROM rust:1.51
 
 # deps from https://github.com/Spotifyd/spotifyd/tree/99f058a7010e5da5425b7c572efb9f1ed8f866e8#compiling-from-source
 RUN apt-get update && apt install -y \
@@ -9,8 +9,8 @@ RUN apt-get update && apt install -y \
 RUN git clone https://github.com/Spotifyd/spotifyd.git
 WORKDIR /spotifyd
 
-# latest as of Sept 30, 2020
-RUN git checkout 7e346c8f2e4ec09e565b311d130fc91a01a244df
+# latest as of April 3, 2021
+RUN git checkout 82bc875efc4e1b2e0e1c2e489e3dd4f2e6a5b97b
 
 RUN cargo build --release
 
