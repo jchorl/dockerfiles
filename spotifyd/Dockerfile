@@ -1,4 +1,10 @@
-# docker run -d --device /dev/snd -v /home/j/.spotify_password:/root/.config/spotifyd/password:ro --restart=always jchorl/spotifyd:de4571067667f4340971938080c4ee725a0c4368 --device-name bike
+# docker run -d \
+#     --device /dev/snd \
+#     -v /home/j/.spotify_password:/root/.config/spotifyd/password:ro \
+#     --restart=always \
+#     --env ALSA_CARD=Generic \
+#     jchorl/spotifyd:26adfa67ea2ad405ae6d7b5930742a2b81bd8d6b \
+#     --device-name bike
 # on some machines, also --env ALSA_CARD=Generic (found using aplay -l https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture#Select_the_default_PCM_via_environment_variable)
 FROM rust:1.51
 
