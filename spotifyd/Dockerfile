@@ -4,7 +4,7 @@
 #     -v /home/j/.config/spotifyd/password:/home/spotifyd/.config/spotifyd/password:ro \
 #     --restart=always \
 #     -e DISPLAY=$DISPLAY \
-#     jchorl/spotifyd:testing \
+#     jchorl/spotifyd:51bd2f4f554059c92ac51289f1de112b6daf5a22 \
 #     --device-name bike
 
 FROM rust:1.52
