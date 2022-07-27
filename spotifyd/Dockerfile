@@ -7,13 +7,19 @@
 #     jchorl/spotifyd:51bd2f4f554059c92ac51289f1de112b6daf5a22 \
 #     --device-name bike
 
-FROM rust:1.62
+# we use ubuntu and install the toolchain because
+# as of 7/27, debian doesn't support libssl3
+FROM ubuntu:22.04
 
 # deps from https://spotifyd.github.io/spotifyd/installation/Ubuntu.html
 RUN apt-get update && apt install --no-install-recommends -y -qq \
     libasound2-dev libssl-dev pkg-config libpulse-dev libdbus-1-dev \
-    wget && \
+    build-essential \
+    curl wget ca-certificates && \
     rm -rf /var/lib/apt/lists/*
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
+ENV PATH="${PATH}:/root/.cargo/bin"
 
 ARG SPOTIFYD_SHA=993336f74ec89cb6cad23dd009251e70548761b6
 
