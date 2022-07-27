@@ -7,25 +7,28 @@
 #     jchorl/spotifyd:51bd2f4f554059c92ac51289f1de112b6daf5a22 \
 #     --device-name bike
 
-FROM rust:1.52
+FROM rust:1.62
 
-# deps from https://github.com/Spotifyd/spotifyd/tree/99f058a7010e5da5425b7c572efb9f1ed8f866e8#compiling-from-source
-RUN apt-get update && apt install -y \
-    libasound2-dev libssl-dev libpulse-dev libdbus-1-dev \
-    git
-RUN git clone https://github.com/Spotifyd/spotifyd.git
+# deps from https://spotifyd.github.io/spotifyd/installation/Ubuntu.html
+RUN apt-get update && apt install --no-install-recommends -y -qq \
+    libasound2-dev libssl-dev pkg-config libpulse-dev libdbus-1-dev \
+    wget && \
+    rm -rf /var/lib/apt/lists/*
+
+ARG SPOTIFYD_SHA=993336f74ec89cb6cad23dd009251e70548761b6
+
 WORKDIR /spotifyd
-
-# latest as of April 3, 2021
-RUN git checkout 82bc875efc4e1b2e0e1c2e489e3dd4f2e6a5b97b
+RUN wget -q -O - https://github.com/Spotifyd/spotifyd/archive/${SPOTIFYD_SHA}.tar.gz \
+    | tar xzv --strip=1
 
 RUN cargo build --release --no-default-features --features pulseaudio_backend,dbus_keyring,dbus_mpris
 
-FROM ubuntu:20.04
-RUN apt-get update && apt-get install -y \
+FROM ubuntu:22.04
+RUN apt-get update && apt install --no-install-recommends -y -qq \
     alsa \
     pulseaudio \
-    dbus-x11
+    dbus-x11 && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN useradd -ms /bin/bash -d /home/spotifyd --uid 1000 spotifyd
 USER spotifyd
