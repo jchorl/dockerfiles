@@ -33,6 +33,7 @@ FROM ubuntu:22.04
 RUN apt-get update && apt install --no-install-recommends -y -qq \
     alsa \
     pulseaudio \
+    ca-certificates \
     dbus-x11 && \
     rm -rf /var/lib/apt/lists/*
 
