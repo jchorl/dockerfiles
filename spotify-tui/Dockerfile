@@ -1,32 +1,33 @@
 # auth requires this workaround: https://github.com/Rigellute/spotify-tui/issues/136#issuecomment-549771256
 # docker run -it --rm --net=host -v spotify-tui-creds:/root/.config/spotify-tui/ jchorl/spotify-tui:d9a8a4e098e0efd7534466ff7c6d4a95ea76b7fc
 
-ARG RUST_VERSION=1.52
+FROM rust:1.62-bullseye
 
-FROM rust:${RUST_VERSION}
-
-ARG REPO=https://github.com/Rigellute/spotify-tui.git
-ARG COMMIT=6a999d81ee768b05fdaf1e2697b78cde2b8fd456
-
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install --no-install-recommends -y -qq \
+    wget \
     libxcb-shape0-dev \
-    libxcb-xfixes0-dev
+    libxcb-xfixes0-dev && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN git clone ${REPO} /build
-WORKDIR /build
-RUN git checkout ${COMMIT}
+ARG SPOTIFY_TUI_SHA=c4dcf6b9fd8318017acbdd7ec005955e26cf2794
+
+WORKDIR /spotify-tui
+RUN wget -q -O - https://github.com/Rigellute/spotify-tui/archive/${SPOTIFY_TUI_SHA}.tar.gz \
+    | tar xzv --strip=1
+
 RUN cargo build --release
 
-FROM ubuntu:20.04
-RUN apt-get update && apt-get install -y \
+FROM debian:bullseye
+RUN apt-get update && apt-get install --no-install-recommends -y -qq \
     libxcb1 \
     libxcb-render0 \
     libxcb-shape0 \
     libxcb-xfixes0 \
     libssl1.1 \
     ca-certificates
-COPY --from=0 /build/target/release/spt /spotify-tui
+
+COPY --from=0 /spotify-tui/target/release/spt /usr/bin/spt
 
 # we don't use /root/.config so we can mount a named volume over that to store creds
 COPY ./config.yml /config.yml
-ENTRYPOINT ["/spotify-tui", "--config", "/config.yml"]
+ENTRYPOINT ["/usr/bin/spt", "--config", "/config.yml"]
