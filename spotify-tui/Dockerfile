@@ -1,5 +1,5 @@
 # auth requires this workaround: https://github.com/Rigellute/spotify-tui/issues/136#issuecomment-549771256
-# docker run -it --rm --net=host -v spotify-tui-creds:/root/.config/spotify-tui/ jchorl/spotify-tui:d9a8a4e098e0efd7534466ff7c6d4a95ea76b7fc
+# docker run -it --rm --net=host -v spotify-tui-creds:/root/.config/spotify-tui/ jchorl/spotify-tui:b4cde9c5deb2d3a0251c2bc6f50e96a3b000eac9
 
 FROM rust:1.62-bullseye
 

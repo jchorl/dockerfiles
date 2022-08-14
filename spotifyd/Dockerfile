@@ -1,8 +1,9 @@
 # docker run -d \
+#     --name spotifyd \
 #     -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
 #     -v /run/user/1000/pulse:/run/user/1000/pulse \
 #     -v /home/j/.config/spotifyd/password:/home/spotifyd/.config/spotifyd/password:ro \
-#     --restart=always \
+#     --restart=no \
 #     -e DISPLAY=$DISPLAY \
 #     jchorl/spotifyd:6ddf4e50e01c7be266e72b256bf2d08990f0c003 \
 #     --device-name bike
