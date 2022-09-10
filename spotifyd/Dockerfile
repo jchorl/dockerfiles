@@ -22,7 +22,7 @@ RUN apt-get update && apt install --no-install-recommends -y -qq \
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
 ENV PATH="${PATH}:/root/.cargo/bin"
 
-ARG SPOTIFYD_SHA=993336f74ec89cb6cad23dd009251e70548761b6
+ARG SPOTIFYD_SHA=7146f64a819590a16de9991de74f8bc2fea9c2ac
 
 WORKDIR /spotifyd
 RUN wget -q -O - https://github.com/Spotifyd/spotifyd/archive/${SPOTIFYD_SHA}.tar.gz \
