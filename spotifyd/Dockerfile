@@ -5,7 +5,7 @@
 #     -v /home/j/.config/spotifyd/password:/home/spotifyd/.config/spotifyd/password:ro \
 #     --restart=no \
 #     -e DISPLAY=$DISPLAY \
-#     jchorl/spotifyd:6ddf4e50e01c7be266e72b256bf2d08990f0c003 \
+#     jchorl/spotifyd:be50e0bc3ef393eda91a1fff577487e5c534eff8 \
 #     --device-name bike
 
 # we use ubuntu and install the toolchain because
