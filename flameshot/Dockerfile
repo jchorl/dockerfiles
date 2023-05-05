@@ -10,6 +10,7 @@
 #     -v /tmp/.X11-unix:/tmp/.X11-unix \
 #     -v /home/j/.Xauthority:/root/.Xauthority:ro \
 #     -e XAUTHORITY=/root/.Xauthority \
+#     -h $DCK_HOST \
 #     jchorl/flameshot \
 #     flameshot
 
