@@ -16,7 +16,7 @@ RUN apt-get update && apt install --no-install-recommends -y -qq \
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
 ENV PATH="${PATH}:/root/.cargo/bin"
 
-ARG GIT_SHA=e18835c6a182295cd15b13b8200ba462d2097f97
+ARG GIT_SHA=0b2da9ca7a9e7df181e717dd67b39ceb2aa7f4db
 
 WORKDIR /i3status-rust
 RUN wget -q -O - https://github.com/greshake/i3status-rust/archive/${GIT_SHA}.tar.gz \
